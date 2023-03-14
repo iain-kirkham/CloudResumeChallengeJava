@@ -1,0 +1,19 @@
+# Project exclude paths
+/.aws-sam/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Maven build
+target/
+dependency-reduced-pom.xml
+
+# IDEA internal
+*.iml
+.idea
+.gradle
+.settings
+.classpath
+.project
