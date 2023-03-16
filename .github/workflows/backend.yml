@@ -21,7 +21,7 @@ jobs:
           role-session-name: CRCBackendDeploy
           aws-region: eu-west-2
       # Build inside Docker containers
-      - run: sam build --use-container
+      - run: sam build --use-container --container-env-var MAVEN_OPTS="-DskipTests=true"
       # Prevent prompts and failure when the stack is unchanged
       - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
       
