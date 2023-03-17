@@ -20,8 +20,13 @@ jobs:
           role-to-assume: arn:aws:iam::728092359661:role/CRCBackendDeploy
           role-session-name: CRCBackendDeploy
           aws-region: eu-west-2
+      - uses: actions/setup-java@v3.10.0
+        with:
+          distribution: 'corretto'
+          java-version: '11'
+          cache: 'maven'
       # Build inside Docker containers
-      - run: sam build --use-container --container-env-var AWS_ACCESS_KEY_ID --container-env-var AWS_SECRET_ACCESS_KEY
+      - run: sam build
       # Prevent prompts and failure when the stack is unchanged
       - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
       
