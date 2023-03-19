@@ -11,9 +11,9 @@ public class AppTest {
         App app = new App();
         APIGatewayProxyResponseEvent result = app.handleRequest(null, null);
         assertEquals(200, result.getStatusCode().intValue());
-        assertEquals("*", result.getHeaders().get("Access-Control-Allow-Headers"));
-        assertEquals("*", result.getHeaders().get("Access-Control-Allow-Methods"));
-        assertEquals("*", result.getHeaders().get("Access-Control-Allow-Origin"));
+        assertEquals("application/json", result.getHeaders().get("Access-Control-Allow-Headers"));
+        assertEquals("GET", result.getHeaders().get("Access-Control-Allow-Methods"));
+        assertEquals("iainkirkham.dev", result.getHeaders().get("Access-Control-Allow-Origin"));
         String content = result.getBody();
         assertNotNull(content);
         assertTrue(content.contains("\"count\":"));

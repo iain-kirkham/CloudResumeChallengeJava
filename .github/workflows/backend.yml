@@ -29,13 +29,3 @@ jobs:
           cache: maven
       - run: sam build
       - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
-  generate-SBOM:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: anchore/sbom-action@v0
-        with:
-          path: ./JAR/UpdateVisitorCount-1.0.jar
-      - uses: anchore/sbom-action/publish-sbom@v0
-        with:
-          sbom-artifact-match: .*\.spdx$

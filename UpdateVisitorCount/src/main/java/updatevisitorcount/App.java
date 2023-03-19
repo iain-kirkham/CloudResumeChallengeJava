@@ -36,9 +36,9 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
         UpdateVisitors.updateVisitorCount(ddb, tableName, primaryKey, siteName, AttributeToUpdate, updatedCount);
         ddb.close();
 
-        headers.put("Access-Control-Allow-Headers", "*");
-        headers.put("Access-Control-Allow-Methods", "*");
-        headers.put("Access-Control-Allow-Origin", "*");
+        headers.put("Access-Control-Allow-Headers", "application/json");
+        headers.put("Access-Control-Allow-Methods", "GET");
+        headers.put("Access-Control-Allow-Origin", "iainkirkham.dev");
 
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
