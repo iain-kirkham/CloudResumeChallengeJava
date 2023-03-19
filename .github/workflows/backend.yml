@@ -37,7 +37,7 @@ jobs:
           java-version: '11'
           cache: maven
       - name: setup and run
-        working-directory: .\UpdateVisitorCount\
+        working-directory: ./UpdateVisitorCount
         run: mvn package
       - uses: anchore/sbom-action@v0
         with:
