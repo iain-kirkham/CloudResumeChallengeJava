@@ -27,13 +27,22 @@ jobs:
           cache: 'maven'
       # Build using maven
       - run: sam build
-      # Build SBOM
-      - uses: anchore/sbom-action@v0
-        with:
-          path: ./UpdateVisitorCount/target/UpdateVisitorCount-1.0.jar
-      - uses: anchore/sbom-action/publish-sbom@v0
-        with:
-          sbom-artifact-match: ".*\\.spdx$"
       # Prevent prompts and failure when the stack is unchanged
       - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
-      
+  generate-SBOM:
+    - runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+        - uses: actions/setup-java@v3.10.0
+          with:
+            distribution: 'corretto'
+            java-version: '11'
+            cache: 'maven'
+          working-directory: .\UpdateVisitorCount\
+          run: mvn package
+        - uses: anchore/sbom-action@v0
+          with:
+            path: ./UpdateVisitorCount/target/UpdateVisitorCount-1.0.jar
+        - uses: anchore/sbom-action/publish-sbom@v0
+          with:
+            sbom-artifact-match: ".*\\.spdx$"
