@@ -38,7 +38,7 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
 
         headers.put("Access-Control-Allow-Headers", "application/json");
         headers.put("Access-Control-Allow-Methods", "GET");
-        headers.put("Access-Control-Allow-Origin", "iainkirkham.dev");
+        headers.put("Access-Control-Allow-Origin", "https://iainkirkham.dev");
 
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
