@@ -25,8 +25,15 @@ jobs:
           distribution: 'corretto'
           java-version: '11'
           cache: 'maven'
-      # Build inside Docker containers
+      # Build using maven
       - run: sam build
+      # Build SBOM
+      - uses: anchore/sbom-action@v0
+        with:
+          path: UpdateVisitorCount/target/UpdateVisitorCount-1.0.jar
+      - uses: anchore/sbom-action/publish-sbom@v0
+        with:
+          sbom-artifact-match: ".*\\.spdx$"
       # Prevent prompts and failure when the stack is unchanged
       - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
       
