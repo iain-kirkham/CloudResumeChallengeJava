@@ -30,7 +30,7 @@ jobs:
       # Build SBOM
       - uses: anchore/sbom-action@v0
         with:
-          path: UpdateVisitorCount/target/UpdateVisitorCount-1.0.jar
+          path: ./UpdateVisitorCount/target/UpdateVisitorCount-1.0.jar
       - uses: anchore/sbom-action/publish-sbom@v0
         with:
           sbom-artifact-match: ".*\\.spdx$"
