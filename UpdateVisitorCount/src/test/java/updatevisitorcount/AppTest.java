@@ -13,7 +13,7 @@ public class AppTest {
         assertEquals(200, result.getStatusCode().intValue());
         assertEquals("application/json", result.getHeaders().get("Access-Control-Allow-Headers"));
         assertEquals("GET", result.getHeaders().get("Access-Control-Allow-Methods"));
-        assertEquals("iainkirkham.dev", result.getHeaders().get("Access-Control-Allow-Origin"));
+        assertEquals("https://iainkirkham.dev", result.getHeaders().get("Access-Control-Allow-Origin"));
         String content = result.getBody();
         assertNotNull(content);
         assertTrue(content.contains("\"count\":"));
