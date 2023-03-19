@@ -1,11 +1,11 @@
 name: backend
-on:
+'on':
   push:
     branches:
       - master
 permissions:
   id-token: write
-  contents: read 
+  contents: read
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -14,35 +14,34 @@ jobs:
       - uses: actions/setup-python@v4.5.0
       - uses: aws-actions/setup-sam@v2
         with:
-          use-installer: true 
+          use-installer: true
       - uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::728092359661:role/CRCBackendDeploy
+          role-to-assume: 'arn:aws:iam::728092359661:role/CRCBackendDeploy'
           role-session-name: CRCBackendDeploy
           aws-region: eu-west-2
       - uses: actions/setup-java@v3.10.0
         with:
-          distribution: 'corretto'
+          distribution: corretto
           java-version: '11'
-          cache: 'maven'
-      # Build using maven
+          cache: maven
       - run: sam build
-      # Prevent prompts and failure when the stack is unchanged
       - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
   generate-SBOM:
-    - runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v3
-        - uses: actions/setup-java@v3.10.0
-          with:
-            distribution: 'corretto'
-            java-version: '11'
-            cache: 'maven'
-          working-directory: .\UpdateVisitorCount\
-          run: mvn package
-        - uses: anchore/sbom-action@v0
-          with:
-            path: ./UpdateVisitorCount/target/UpdateVisitorCount-1.0.jar
-        - uses: anchore/sbom-action/publish-sbom@v0
-          with:
-            sbom-artifact-match: ".*\\.spdx$"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3.10.0
+        with:
+          distribution: corretto
+          java-version: '11'
+          cache: maven
+      - name: setup and run
+        working-directory: .\UpdateVisitorCount\
+        run: mvn package
+      - uses: anchore/sbom-action@v0
+        with:
+          path: ./UpdateVisitorCount/target/UpdateVisitorCount-1.0.jar
+      - uses: anchore/sbom-action/publish-sbom@v0
+        with:
+          sbom-artifact-match: .*\.spdx$
