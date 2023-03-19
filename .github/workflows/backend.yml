@@ -48,7 +48,7 @@ jobs:
         run: mvn package
       - uses: anchore/sbom-action@v0
         with:
-          path: ./UpdateVisitorCount/target/UpdateVisitorCount-1.0.jar
+          path: /home/runner/work/CloudResumeChallengeJava/CloudResumeChallengeJava/UpdateVisitorCount/target/UpdateVisitorCount-1.0-shaded.jar
       - uses: anchore/sbom-action/publish-sbom@v0
         with:
           sbom-artifact-match: .*\.spdx$
