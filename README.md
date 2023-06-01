@@ -1,5 +1,6 @@
 # Cloud Resume Challenge - Backend Java
-https://lift.sonatype.com/api/badge/github.com/iain-kirkham/CloudResumeChallengeJava
+![Sonatype lift badge](https://lift.sonatype.com/api/badge/github.com/iain-kirkham/CloudResumeChallengeJava)
+![GitHub backend workflow](https://github.com/iain-kirkham/CloudResumeChallengeJava/actions/workflows/backend.yml/badge.svg)
 
 ![Cloud Resume Challenge Diagram](https://res.cloudinary.com/db7mbeieo/image/upload/v1683923642/Cloud-Resume-Challenge-Diagram_sr4sxp.webp)
 
