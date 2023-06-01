@@ -28,7 +28,7 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
         Map<String, String> headers = new HashMap<>();
 
         DynamoDbClient ddb = DynamoDbClient.builder()
-                .region(Region.EU_WEST_2)
+                .region(Region.EU_WEST_1)
                 .build();
         visitorCount = GetVisitors.getVisitorCount(ddb, tableName, primaryKey, siteName);
         visitorCount++;

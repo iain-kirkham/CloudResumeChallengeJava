@@ -3,7 +3,7 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   CloudResumeChallenge
 
-  Sample SAM Template for CloudResumeChallenge
+  Cloud Resume Challenge SAM resources for frontend and backend
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -11,6 +11,83 @@ Globals:
     Timeout: 20
 
 Resources:
+  CloudResumeSite:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: index.html
+      BucketName: cloud-resume-site
+
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      PolicyDocument:
+        Id: MyPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: "*"
+            Action: "s3:GetObject"
+            Resource: !Join
+              - ""
+              - - "arn:aws:s3:::"
+                - !Ref CloudResumeSite
+                - /*
+      Bucket: !Ref CloudResumeSite
+
+  CloudChallengeRoute53Record:
+    Type: "AWS::Route53::RecordSetGroup"
+    Properties:
+      HostedZoneId: Z10380933R47QWGXMI4EL
+      RecordSets:
+        - Name: iainkirkham.dev
+          Type: A
+          AliasTarget:
+            HostedZoneId: Z2FDTNDATAQYW2
+            DNSName: !GetAtt CloudResumeDistribution.DomainName
+
+  CloudResumeDistribution:
+    Type: "AWS::CloudFront::Distribution"
+    Properties:
+      DistributionConfig:
+        HttpVersion: http2
+        ViewerCertificate:
+          MinimumProtocolVersion: TLSv1.2_2021
+          AcmCertificateArn: arn:aws:acm:us-east-1:728092359661:certificate/8bf4026c-b921-4dfa-8522-d01d7d07dea9
+          SslSupportMethod: sni-only
+        Aliases:
+          - iainkirkham.dev
+        DefaultCacheBehavior:
+          ViewerProtocolPolicy: allow-all
+          TargetOriginId: cloud-resume-site.s3-website-eu-west-1.amazonaws.com
+          DefaultTTL: 0
+          MinTTL: 0
+          MaxTTL: 0
+          ForwardedValues:
+            QueryString: false
+        Origins:
+          - DomainName: cloud-resume-site.s3-website-eu-west-1.amazonaws.com
+            Id: cloud-resume-site.s3-website-eu-west-1.amazonaws.com
+            CustomOriginConfig:
+              OriginProtocolPolicy: match-viewer
+        PriceClass: PriceClass_100
+        Enabled: "true"
+        DefaultRootObject: index.html
+
+  DynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: cloud-resume-challenge
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: "ID"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "ID"
+          KeyType: "HASH"
+
   UpdateVisitorCountFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
