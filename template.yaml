@@ -96,7 +96,7 @@ Resources:
             TableName: cloud-resume-challenge
       CodeUri: UpdateVisitorCount
       Handler: updatevisitorcount.App::handleRequest
-      Runtime: java11
+      Runtime: java17
       Architectures:
         - x86_64
       MemorySize: 512

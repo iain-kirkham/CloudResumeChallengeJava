@@ -16,20 +16,20 @@ import java.util.Map;
  * Then once finished updating the database, returns a JSON string containing the updated user value to be displayed
  */
 public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+    String primaryKey = "ID";
+    String siteName = "blog";
+    String AttributeToUpdate = "visitors";
+    String tableName = "cloud-resume-challenge";
+    int visitorCount;
+    String updatedCount;
+
+    Map<String, String> headers = new HashMap<>();
+
+    DynamoDbClient ddb = DynamoDbClient.builder()
+            .region(Region.EU_WEST_1)
+            .build();
 
     public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
-        String primaryKey = "ID";
-        String siteName = "blog";
-        String AttributeToUpdate = "visitors";
-        String tableName = "cloud-resume-challenge";
-        int visitorCount;
-        String updatedCount;
-
-        Map<String, String> headers = new HashMap<>();
-
-        DynamoDbClient ddb = DynamoDbClient.builder()
-                .region(Region.EU_WEST_1)
-                .build();
         visitorCount = GetVisitors.getVisitorCount(ddb, tableName, primaryKey, siteName);
         visitorCount++;
         updatedCount = Integer.toString(visitorCount);
