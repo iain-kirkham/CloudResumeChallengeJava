@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>dev.iainkirkham.aws</groupId>
     <artifactId>UpdateVisitorCount</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>jar</packaging>
     <name>Iain Cloud Resume Challenge Java DynamoDB Lambda</name>
     <properties>
